@@ -1,17 +1,26 @@
 import { styled } from "styled-components";
 
-const HangManWord = () => {
-  const word = "tee";
-  const guessedLetters = ["t", "e", "g"];
+type HangManWordProps = {
+  reveal?: boolean;
+  guessedLetter: string[];
+  words: string;
+};
+
+const HangManWord = ({
+  reveal = false,
+  guessedLetter,
+  words,
+}: HangManWordProps) => {
   return (
     <HangManWordContainer>
-      {word.split("").map((letter, index) => (
+      {words.split("").map((letter, index) => (
         <span style={{ borderBottom: "0.1rem solid black" }} key={index}>
           <span
             style={{
-              visibility: guessedLetters.includes(letter)
-                ? "visible"
-                : "hidden",
+              visibility:
+                guessedLetter.includes(letter) || reveal ? "visible" : "hidden",
+              color:
+                !guessedLetter.includes(letter) && reveal ? "red" : "black",
             }}>
             {letter}
           </span>
