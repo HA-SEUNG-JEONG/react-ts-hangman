@@ -4,7 +4,7 @@ import words from "./wordList.json";
 import styled from "styled-components";
 import HangManDrawing from "./components/HangManDrawing";
 import HangManWord from "./components/HangManWord";
-import KeyBoard from "./components/KeyBoard";
+import KeyBoard, { KEYS } from "./components/KeyBoard";
 
 function App() {
   const getWord = () => words[Math.floor(Math.random() * words.length)];
@@ -24,6 +24,7 @@ function App() {
 
   const addGuessedLetter = useCallback(
     (letter: string) => {
+      if (!KEYS.includes(letter)) return;
       if (guessedLetter.includes(letter) || isWinner || isLoser) return;
       setGuessLetter((prev) => [...prev, letter]);
     },
@@ -73,7 +74,7 @@ function App() {
         words={wordGuess}
       />
       <KeyBoard
-        disabled={isWinner || isLoser}
+        // disabled={isWinner || isLoser}
         activeLetter={guessedLetter.filter((letter) =>
           wordGuess.includes(letter)
         )}

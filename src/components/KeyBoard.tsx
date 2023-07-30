@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const KEYS = [
+export const KEYS = [
   "a",
   "b",
   "c",
@@ -57,7 +57,7 @@ const KeyBoard = ({
             <Button
               $isActive={isActive}
               $isinActive={isInactive}
-              disabled={isActive || isInactive || disabled}
+              // disabled={isActive || isInactive || disabled}
               onClick={() => addGuessedLetter(key)}
               key={key}>
               {key}
@@ -84,10 +84,10 @@ const Button = styled.button<{ $isActive: boolean; $isinActive: boolean }>`
     background-color: hsl(200, 100%, 50%);
     color: white;
   } */
-  background-color: ${(props) =>
+  /* background-color: ${(props) =>
     props.$isActive ? "hsl(200, 100%, 50%)" : ""};
   color: ${(props) => (props.$isActive ? "white" : "black")};
-  opacity: ${(props) => (props.$isActive ? "1" : "0.5")};
+  opacity: ${(props) => (props.$isActive ? "1" : "0.5")}; */
 
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
