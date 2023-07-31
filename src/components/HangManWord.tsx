@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 
 type HangManWordProps = {
@@ -11,8 +12,14 @@ const HangManWord = ({
   guessedLetter,
   words,
 }: HangManWordProps) => {
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  const handleClick = () => {
+    setIsKeyboardVisible(true);
+  };
+
   return (
-    <HangManWordContainer>
+    <HangManWordContainer onClick={handleClick}>
       {words.split("").map((letter, index) => (
         <span style={{ borderBottom: "0.1rem solid black" }} key={index}>
           <span
@@ -26,6 +33,14 @@ const HangManWord = ({
           </span>
         </span>
       ))}
+      {isKeyboardVisible && (
+        <input
+          type="text"
+          autoFocus
+          style={{ position: "absolute", top: -100, left: -100 }} // 숨겨진 위치로 이동하여 키보드를 활성화합니다.
+          onBlur={() => setIsKeyboardVisible(false)}
+        />
+      )}
     </HangManWordContainer>
   );
 };
