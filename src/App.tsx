@@ -10,7 +10,6 @@ function App() {
   const getWord = () => words[Math.floor(Math.random() * words.length)];
 
   const [wordGuess, setWordGuess] = useState(getWord);
-  console.log(wordGuess);
   const [guessedLetter, setGuessLetter] = useState<string[]>([]);
 
   const inCorrectLetters = guessedLetter.filter(
@@ -63,6 +62,21 @@ function App() {
     };
   }, []);
 
+  // 모바일 환경에서 키보드 입력 받기
+  useEffect(() => {
+    const keydownHandler = (event: KeyboardEvent) => {
+      const key = event.key;
+      if (!key.match(/^[a-z]$/)) return;
+      event.preventDefault();
+      addGuessedLetter(key);
+    };
+
+    document.addEventListener("keydown", keydownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keydownHandler);
+    };
+  }, []);
   return (
     <Container>
       <Status>{isWinner && "Winner"}</Status>
@@ -74,7 +88,6 @@ function App() {
         words={wordGuess}
       />
       <KeyBoard
-        // disabled={isWinner || isLoser}
         activeLetter={guessedLetter.filter((letter) =>
           wordGuess.includes(letter)
         )}
@@ -89,9 +102,9 @@ const Container = styled.div`
   max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin: 0 auto;
   align-items: center;
+  margin: 0 auto;
+  gap: 1rem;
 `;
 
 const Status = styled.div`
